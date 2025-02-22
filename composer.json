@@ -1,0 +1,32 @@
+{
+  "name": "mattb-it/zinq",
+  "description": "Ship your Laravel projects faster with Livewire + Tailwind 4 tools.",
+  "type": "library",
+  "require": {
+    "illuminate/filesystem": "^11.0",
+    "illuminate/support": "^11.0",
+    "illuminate/view": "^11.0",
+    "illuminate/console": "^11.0",
+    "illuminate/routing": "^11.0",
+    "livewire/livewire": "^3.5"
+  },
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Matt",
+      "email": "me@mattb.it"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Mattbit\\Zinq\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Mattbit\\Zinq\\ZinqServiceProvider"
+      ]
+    }
+  }
+}

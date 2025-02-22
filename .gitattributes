@@ -1,0 +1,16 @@
+* text=auto
+
+*.blade.php diff=html
+*.css diff=css
+*.html diff=html
+*.md diff=markdown
+*.php diff=php
+*.twig diff=twig
+*.xml diff=xml
+*.yml diff=yaml
+*.yaml diff=yaml
+*.json diff=json
+*.js diff=javascript
+*.jsx diff=javascript
+*.ts diff=typescript
+*.tsx diff=typescript
