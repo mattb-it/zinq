@@ -6,7 +6,6 @@
     'block' => false,
     'primary' => false, 'bare' => false,
     'xl' => false, 'lg' => false, 'sm' => false, 'xs' => false,
-    'toast' => null, 'toastType' => 'info', 'toastPosition' => config('zinq.toast_position')->value, 'toastDuration' => config('zinq.toast_duration'),
 ])
 @php
     $class = 'zinq-link';
@@ -39,8 +38,6 @@
     ];
     if ($modal) {
         $attributesToMerge['x-on:click'] = "window.dispatchEvent(new CustomEvent('open-modal', { detail: '$modal' }))";
-    } elseif ($toast) {
-        $attributesToMerge['x-on:click'] = "window.dispatchEvent(new CustomEvent('show-toast', { detail: [{ message: '$toast', type: '$toastType', duration: $toastDuration, position: '$toastPosition'}] }))";
     }
 @endphp
 <button {{ $attributes->merge($attributesToMerge) }}>

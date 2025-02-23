@@ -12,7 +12,6 @@ final class ZinqScripts
     {
         return <<<HTML
 <script>
-    var zinqFlashedToasts = JSON.parse('{$flashedToastsJsonString}');
     (function() {
         const isDarkMode = localStorage.getItem('theme') === 'dark' ||
             (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
