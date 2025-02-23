@@ -1,13 +1,8 @@
 <?php
 
-use Mattbit\Zinq\Enums\ToastPositionEnum;
-
 return [
 
     'inject_fonts' => true,
-
-    'toast_position' => ToastPositionEnum::TOP_RIGHT,
-    'toast_duration' => 5000,
 
     'date_format' => 'M j, G:i A',
 
