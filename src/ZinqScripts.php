@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mattbit\Zinq;
 
 use Livewire\Livewire;
+use Mattbit\Zinq\Facades\Zinq;
 
 final class ZinqScripts
 {
@@ -32,6 +33,8 @@ HTML;
         // Force Livewire to inject its assets - we need alpinejs.
         Livewire::forceAssetInjection();
 
-        return '<script type="module" src="/zinq.js?id=' . uniqid() . '"></script>';
+        $scriptsFile = Zinq::findAsset('zinq', 'js');
+        $scriptsHash = $scriptsFile ? Zinq::extractVersionFromFile($scriptsFile) : 'static';
+        return '<script type="module" src="/zinq.js?v=' . $scriptsHash . '"></script>';
     }
 }

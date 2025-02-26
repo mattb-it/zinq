@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mattbit\Zinq;
 
 use Illuminate\Container\Attributes\Config;
+use Mattbit\Zinq\Facades\Zinq;
 
 final readonly class ZinqStyles
 {
@@ -42,7 +43,9 @@ final readonly class ZinqStyles
             $styles->push('/zinq-fonts.css');
         }
 
-        $styles->push('/zinq.css?id=' . uniqid());
+        $stylesFile = Zinq::findAsset('zinq', 'css');
+        $hash = $stylesFile ? Zinq::extractVersionFromFile($stylesFile) : 'static';
+        $styles->push('/zinq.css?v=' . $hash);
 
         return $styles
             ->map(fn (string $style) => '<link rel="preload" as="style" href="' . $style . '" /><link rel="stylesheet" href="' . $style . '" data-navigate-track="reload"/>')

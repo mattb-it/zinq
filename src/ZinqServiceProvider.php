@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Str;
 use Mattbit\Zinq\Facades\Zinq;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -78,7 +77,7 @@ class ZinqServiceProvider extends ServiceProvider
 
     private function serveCssStyles(string $name): BinaryFileResponse
     {
-        $cssFile = $this->findAsset($name, '.css');
+        $cssFile = Zinq::findAsset($name, '.css');
         if (!$cssFile) {
             abort(Response::HTTP_NOT_FOUND);
         }
@@ -91,7 +90,7 @@ class ZinqServiceProvider extends ServiceProvider
 
     private function serveJsScripts(string $name): BinaryFileResponse
     {
-        $jsFile = $this->findAsset($name, '.js');
+        $jsFile = Zinq::findAsset($name, '.js');
         if (!$jsFile) {
             abort(Response::HTTP_NOT_FOUND);
         }
@@ -100,12 +99,5 @@ class ZinqServiceProvider extends ServiceProvider
             'Cache-Control' => 'public, max-age=31536000',
             'Expires' => gmdate('D, d M Y H:i:s \G\M\T', time() + 31536000),
         ]);
-    }
-
-    private function findAsset(string $name, string $extension): ?string
-    {
-        return collect(File::files(__DIR__ . '/../dist/assets/'))
-            ->map(fn ($file) => $file->getFilename())
-            ->first(fn (string $filename) => Str::startsWith($filename, $name) && Str::endsWith($filename, $extension));
     }
 }
