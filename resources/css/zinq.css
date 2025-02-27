@@ -336,13 +336,6 @@ h4, .h4 {
     }
 }
 
-.zinq-box {
-    @apply p-4 rounded-lg;
-    /* background */
-    @apply bg-white dark:bg-zinc-900;
-    /* border */
-    @apply border border-zinc-200 dark:border-zinc-800;
-}
 
 .zinq-checkbox {
     @apply transition-all duration-200;
