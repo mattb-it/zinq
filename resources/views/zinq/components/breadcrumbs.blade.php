@@ -5,13 +5,13 @@
 ])
 <nav {{ $attributes->merge(['class' => 'flex items-center space-x-1 text-sm rounded-3xl p-1 pr-3 w-fit']) }}>
     @if ($back)
-    <a href="{{ $back }}" class="zinq-breadcrumbs-back" {{ $navigate ?? ' wire:navigate' }}>
+    <a href="{{ $back }}" class="bg-none p-1 bg-zinc-200 dark:bg-zinc-900 rounded-full hover:bg-zinc-300 dark:hover:bg-zinc-700 text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white" {{ $navigate ?? ' wire:navigate' }}>
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
     </a>
     @endif
-    <div class="zinq-breadcrumbs">
+    <div class="flex flex-wrap items-center space-x-2 text-sm">
         @if ($home)
         <zinq:breadcrumbs.link href="{{ $home }}" :navigate="$navigate">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">

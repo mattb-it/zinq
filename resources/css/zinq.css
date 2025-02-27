@@ -545,25 +545,6 @@ h4, .h4 {
     @apply w-full max-w-(--breakpoint-sm) border border-white dark:border-zinc-950 dark:shadow-zinc-800/80 rounded-lg shadow-2xs;
 }
 
-.zinq-breadcrumbs-back {
-    @apply bg-none!;
-    @apply p-1! bg-zinc-200! dark:bg-zinc-900! rounded-full! hover:bg-zinc-300! dark:hover:bg-zinc-700! text-zinc-600! dark:text-zinc-400! hover:text-zinc-950! dark:hover:text-white!;
-}
-
-.zinq-breadcrumbs {
-    @apply flex flex-wrap items-center space-x-2 text-sm;
-
-    a, span {
-        @apply text-[0.85rem];
-    }
-    span {
-        @apply text-zinc-400 dark:text-zinc-700;
-    }
-    a {
-        @apply text-zinc-600! dark:text-zinc-400! hover:text-zinc-950! dark:hover:text-white!;
-        @apply bg-none!;
-    }
-}
 
 .zinq-tabs-nav {
     @apply inline-flex border-b border-transparent mb-6 text-sm font-medium;
