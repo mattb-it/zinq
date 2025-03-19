@@ -18,7 +18,7 @@
     }
 
     // Base checkbox classes
-    $checkboxClasses = 'transition-all duration-200 flex items-center justify-center rounded focus:ring-2 focus:outline-hidden focus:ring-offset-2 focus:ring-(color:--primary) dark:focus:ring-offset-(color:--gray-800) bg-white dark:bg-(color:--gray-800) border border-zinc-300 dark:border-zinc-700';
+    $checkboxClasses = 'flex items-center justify-center rounded focus:ring-2 focus:outline-hidden focus:ring-offset-2 focus:ring-(color:--primary) dark:focus:ring-offset-(color:--gray-800) border';
 
     // Size variations
     if ($size === 'lg') {
@@ -63,7 +63,7 @@
             <div
                 @click="if (!{{ $disabled ? 'true' : 'false' }}) checked = !checked"
                 @keydown.space.prevent="if (!{{ $disabled ? 'true' : 'false' }}) checked = !checked"
-                :class="checked ? 'border-white dark:border-(color:--primary) bg-(color:--primary) dark:bg-(color:--primary-darker)' : ''"
+                :class="checked ? 'border-white dark:border-(color:--primary) bg-(color:--primary) dark:bg-(color:--primary-darker)' : 'border-zinc-300 dark:border-zinc-700'"
                 class="{{ $checkboxClasses }} @if (!$disabled) focus cursor-pointer @else cursor-not-allowed @endif"
             >
                 <svg x-show="checked" :class="{ 'hidden': !checked }" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="currentColor" class="hidden absolute size-4 text-white dark:text-(color:--gray-800)">
@@ -75,7 +75,7 @@
                 @if (\Illuminate\Support\Str::startsWith($slot, '<'))
                     {!! $slot !!}
                 @else
-                    <x-zinq::label for="{{ $id }}" class="text-base" :sm="$size === 'sm'">{{ $slot }}</x-zinq::label>
+                    <x-zinq::label for="{{ $id }}" :sm="$size === 'sm'">{{ $slot }}</x-zinq::label>
                 @endif
             </div>
         </div>

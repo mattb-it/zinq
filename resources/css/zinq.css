@@ -430,7 +430,7 @@ h4, .h4 {
 }
 
 .zinq-field:not(.zinq-field-split) {
-    .zinq-label:not(.zinq-radio-label):not(.zinq-checkbox-label) {
+    .zinq-label:not(.zinq-radio-label) {
         @apply mb-1.5;
     }
 }
