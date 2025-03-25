@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace {{NAMESPACE}};
 
-use Illuminate\Support\Facades\Mail;
+use App\Models\User;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -17,7 +19,7 @@ class Register extends Component
     public string $email;
     #[Validate(['required', 'string', 'max:255'])]
     public string $name;
-    #[Validate(['required', 'min:8', 'confirmed'])]
+    #[Validate(['required', 'min:8'])]
     public string $password;
 
     public function register(): void
@@ -30,7 +32,7 @@ class Register extends Component
         $user->password = Hash::make($this->password);
         $user->save();
 
-        if (User instanceof MustVerifyEmail) {
+        if ($user instanceof MustVerifyEmail) {
             $user->sendEmailVerificationNotification();
 
             $verifyEmailUrl = url(URL::temporarySignedRoute(
