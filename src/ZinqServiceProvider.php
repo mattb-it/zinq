@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Mattbit\Zinq\Commands\InstallAuthCommand;
 use Mattbit\Zinq\Facades\Zinq;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -66,6 +67,12 @@ class ZinqServiceProvider extends ServiceProvider
         Route::get('/zinq-fonts.css', fn () => $this->serveCssStyles('fonts'));
         Route::get('/zinq.js', fn () => $this->serveJsScripts('zinq'));
         Route::get('/zinq-editor.js', fn () => $this->serveJsScripts('zinq-editor'));
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                InstallAuthCommand::class,
+            ]);
+        }
     }
 
     public function register(): void

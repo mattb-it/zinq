@@ -1,0 +1,54 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{NAMESPACE}};
+
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
+use Illuminate\View\View;
+use Livewire\Attributes\Validate;
+use Livewire\Component;
+
+class Register extends Component
+{
+    #[Validate(['required', 'email', 'unique:users,email'])]
+    public string $email;
+    #[Validate(['required', 'string', 'max:255'])]
+    public string $name;
+    #[Validate(['required', 'min:8', 'confirmed'])]
+    public string $password;
+
+    public function register(): void
+    {
+        $this->validate();
+
+        $user = new User;
+        $user->email = $this->email;
+        $user->name = $this->name;
+        $user->password = Hash::make($this->password);
+        $user->save();
+
+        if (User instanceof MustVerifyEmail) {
+            $user->sendEmailVerificationNotification();
+
+            $verifyEmailUrl = url(URL::temporarySignedRoute(
+                'verification.notice',
+                now()->addMinutes(60),
+                ['email' => $this->email],
+                false,
+            ));
+            $this->redirect($verifyEmailUrl, navigate: true);
+        } else {
+            $this->redirect(route('login'));
+        }
+    }
+
+    public function render(): View
+    {
+        return view('livewire.auth.register')
+            ->extends('vendor.zinq.layouts.authentication')
+            ->section('content');
+    }
+}

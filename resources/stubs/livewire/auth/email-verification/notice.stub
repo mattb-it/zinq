@@ -1,0 +1,26 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{NAMESPACE}};
+
+use Illuminate\View\View;
+use Livewire\Component;
+
+class EmailVerificationNotice extends Component
+{
+    public ?string $successMessage = null;
+
+    public function sendVerificationNotification(): void
+    {
+        auth()->user()->sendEmailVerificationNotification();
+        $this->successMessage = 'Verification link sent!';
+    }
+
+    public function render(): View
+    {
+        return view('livewire.auth.email-verification-notice')
+            ->extends('vendor.zinq.layouts.authentication')
+            ->section('content');
+    }
+}
