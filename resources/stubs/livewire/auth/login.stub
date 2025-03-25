@@ -19,7 +19,7 @@ class Login extends Component
         $this->validate();
 
         $loginUrl = url(URL::temporarySignedRoute(
-            'login',
+            'login-email',
             now()->addMinutes(60),
             ['email' => $this->email],
             false,
