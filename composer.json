@@ -3,11 +3,11 @@
   "description": "Ship your Laravel projects faster with Livewire + Tailwind 4 tools.",
   "type": "library",
   "require": {
-    "illuminate/filesystem": "^11.0",
-    "illuminate/support": "^11.0",
-    "illuminate/view": "^11.0",
-    "illuminate/console": "^11.0",
-    "illuminate/routing": "^11.0",
+    "illuminate/filesystem": "^11.0 || ^12.0",
+    "illuminate/support": "^11.0 || ^12.0",
+    "illuminate/view": "^11.0 || ^12.0",
+    "illuminate/console": "^11.0 || ^12.0",
+    "illuminate/routing": "^11.0 || ^12.0",
     "livewire/livewire": "^3.5"
   },
   "license": "proprietary",
