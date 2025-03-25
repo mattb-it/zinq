@@ -13,7 +13,7 @@ Zinq is a powerful component library for Laravel, built with [Tailwind CSS](http
 ## 🚀 Installation
 To get started with Zinq, install it via Composer:
 ```bash
-composer require zinq/zinq
+composer require mattb-it/zinq
 ```
 
 ## 📖 Documentation
