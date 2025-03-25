@@ -1,0 +1,37 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{NAMESPACE}};
+
+use Illuminate\Support\Facades\URL;
+use Illuminate\View\View;
+use Livewire\Attributes\Validate;
+use Livewire\Component;
+
+class Login extends Component
+{
+    #[Validate(['required', 'email'])]
+    public string $email;
+
+    public function login(): void
+    {
+        $this->validate();
+
+        $loginUrl = url(URL::temporarySignedRoute(
+            'login',
+            now()->addMinutes(60),
+            ['email' => $this->email],
+            false,
+        ));
+
+        $this->redirect($loginUrl, navigate: true);
+    }
+
+    public function render(): View
+    {
+        return view('livewire.auth.login')
+            ->extends('vendor.zinq.layouts.authentication')
+            ->section('content');
+    }
+}

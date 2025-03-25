@@ -1,0 +1,41 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{NAMESPACE}};
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
+use Livewire\Attributes\Locked;
+use Livewire\Attributes\Validate;
+use Livewire\Component;
+
+class LoginEmail extends Component
+{
+    #[Validate('required')]
+    public string $password;
+
+    #[Locked]
+    public string $email;
+
+    public function mount(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    public function login(): void
+    {
+        if (Auth::attempt(['email' => $this->email, 'password' => $this->password])) {
+            $this->redirectRoute('dashboard', navigate: true);
+        } else {
+            $this->addError('password', 'The password you entered is incorrect. Please try again.');
+        }
+    }
+
+    public function render(): View
+    {
+        return view('livewire.auth.login-email')
+            ->extends('vendor.zinq.layouts.authentication')
+            ->section('content');
+    }
+}
