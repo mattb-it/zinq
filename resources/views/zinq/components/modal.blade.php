@@ -1,4 +1,16 @@
-@props(['id', 'title' => null, 'open' => false, 'focusInput' => null])
+@props(['id', 'title' => null, 'open' => false, 'focusInput' => null, 'size' => 'sm'])
+@php
+    // Map size prop to max-width classes
+    $sizeClasses = [
+        'xs' => 'max-w-sm',           // ~384px
+        'sm' => 'max-w-(--breakpoint-sm)',  // current default
+        'md' => 'max-w-2xl',         // ~672px  
+        'lg' => 'max-w-4xl',         // ~896px
+        'max' => 'max-w-7xl lg:max-w-full', // ~1280px, full width on large screens
+    ];
+    
+    $modalSizeClass = $sizeClasses[$size] ?? $sizeClasses['sm'];
+@endphp
 <div x-data="{
         isOpen: {{ $open === true ? 'true' : 'false' }},
         focusInput() {
@@ -19,7 +31,7 @@
      @close-modal.window="if ($event.detail === '{{ $id }}' || $event.detail[0] === '{{ $id }}') { isOpen = false; }"
      x-cloak
      class="fixed inset-0 flex items-center justify-center bg-black/20 dark:bg-black/50 zinq-backdrop-pixelate z-50">
-    <div @click.away="isOpen = false" class="bg-white dark:bg-(color:--gray-900) rounded-md py-4 px-6 max-w-(--breakpoint-sm) w-full border border-white shadow-[2px_2px_0px_0px_var(--gray-700)] dark:shadow-[2px_2px_0px_0px_var(--gray-700)] dark:border-(color:--gray-800)">
+    <div @click.away="isOpen = false" class="bg-white dark:bg-(color:--gray-900) rounded-md py-4 px-6 {{ $modalSizeClass }} w-full border border-white shadow-[2px_2px_0px_0px_var(--gray-700)] dark:shadow-[2px_2px_0px_0px_var(--gray-700)] dark:border-(color:--gray-800)">
         <!-- Modal Header -->
         <div class="flex justify-between items-center">
             @if ($title) <h3 class="zinq-modal-heading text-lg font-semibold text-gray-900 dark:text-(color:--gray-300)">{{ $title }}</h3> @endif
