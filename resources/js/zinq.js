@@ -171,7 +171,6 @@ initializeDropdowns();
 document.addEventListener('livewire:navigated', () => {
     initializeDropdowns();
     initTabs();
-    initializeColorPickers();
 });
 
 function initializeDropdowns() {
