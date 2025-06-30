@@ -7,6 +7,7 @@
     'attribute' => null,
     'error' => null,
     'inline' => false,
+    'search' => false,
 ])
 @php
     $id = $id ?? uniqid('select-');
@@ -26,6 +27,8 @@
         x-data="{
             open: false,
             options: [],
+            filteredOptions: [],
+            searchQuery: '',
             @if ($attributes->get('wire:model.live'))
             selected: $wire.entangle('{{ $attributes->get('wire:model.live') }}').live,
             @elseif ($attributes->has('wire:model'))
@@ -37,6 +40,7 @@
             init() {
                 Alpine.store('zinq_selects', Alpine.store('zinq_selects') || {});
                 Alpine.store('zinq_selects')[`{{ $id }}`] = this;
+                this.filteredOptions = this.options;
 
                 this.$watch('$store.zinq_selects[`{{ $id }}`].selected', (value) => {
                     this.label = this.getOption(value)?.label || '{{ $placeholder }}';
@@ -44,9 +48,38 @@
                     $wire.{{ $attributes->get('wire:model') }} = value;
                     @endif
                 });
+
+                this.$watch('searchQuery', (value) => {
+                    this.filterOptions();
+                });
+
+                this.$watch('options', () => {
+                    this.filteredOptions = this.options;
+                    this.filterOptions();
+                });
+
+                this.$watch('open', (isOpen) => {
+                    if (!isOpen) {
+                        this.searchQuery = '';
+                        this.filteredOptions = this.options;
+                    }
+                });
             },
             getOption(value) {
                 return this.options.find((option) => option.value === value);
+            },
+            filterOptions() {
+                if (!this.searchQuery) {
+                    this.filteredOptions = this.options;
+                    return;
+                }
+                const query = this.searchQuery.toLowerCase();
+                this.filteredOptions = this.options.filter(option =>
+                    option.label.toLowerCase().includes(query)
+                );
+            },
+            clearSearch() {
+                this.searchQuery = '';
             }
         }"
         x-effect="label = selected ? getOption(selected)?.label : '{{ $placeholder }}'"
@@ -77,10 +110,28 @@
         <div
             x-show="open"
             @click.away="open = false"
-            class="absolute mt-1 w-full max-w-md bg-white dark:bg-zinc-800 rounded-md shadow-lg py-1 z-50 hidden"
+            class="absolute mt-1 w-full bg-white dark:bg-zinc-800 rounded-md shadow-lg z-50 hidden"
             :class="{'hidden': !open}"
         >
-            {!! $slot !!}
+            @if ($search)
+                <div class="p-2 border-b border-zinc-200 dark:border-zinc-700">
+                    <zinq:input
+                        x-model="searchQuery"
+                        @click.stop
+                        @keydown.escape="clearSearch()"
+                        type="text"
+                        placeholder="Search..."
+                    />
+                </div>
+            @endif
+            <div class="py-1">
+                {!! $slot !!}
+                @if ($search)
+                    <div x-show="searchQuery && filteredOptions.length === 0" class="px-4 py-3 text-sm text-zinc-500 dark:text-zinc-400 text-center">
+                        No results found
+                    </div>
+                @endif
+            </div>
         </div>
     </div>
 </x-zinq::form.slot>
