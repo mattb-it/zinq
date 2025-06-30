@@ -9,6 +9,7 @@
 @endphp
 <button
     x-init="options.push({ value: '{{ $value }}', label: '{{ $label }}' })"
+    x-show="filteredOptions.some(option => option.value === '{{ $value }}')"
     @click.prevent="selected = {{ is_null($value) ? 'null' : "'$value'" }}; open = false"
     class="w-full px-4 py-2 text-left select-none text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 flex items-center gap-2"
 >
